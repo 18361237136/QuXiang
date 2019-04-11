@@ -2,11 +2,23 @@ package com.example.main.ui
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
+import android.support.annotation.CallSuper
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.view.ViewStub
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import android.widget.TextView
+import com.example.core.util.AndroidVersion
 import com.example.main.R
 import com.example.main.common.callback.PermissionListener
 import com.example.main.util.ActivityCollector
@@ -89,6 +101,136 @@ open class BaseActivity :AppCompatActivity() {
         setSupportActionBar(toolbar)
         val actionBar=supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    //将状态栏设置成透明，只适配5.0以上手机
+    protected fun transparentStatusBar(){
+        if(AndroidVersion.hasLollipop()){
+            val decorView=window.decorView
+            decorView.systemUiVisibility=View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            window.statusBarColor=Color.TRANSPARENT
+        }
+    }
+
+    //检查和处理运行时权限，并将用户授权的结果通过PermissionListener进行回调
+    protected fun handlePermissions(permissions:Array<String>?,listener: PermissionListener){
+        if(permissions==null||activity==null){
+            return
+        }
+        mListener=listener
+        val requestPermissionList=ArrayList<String>()
+        for(permission in permissions){
+            if(ContextCompat.checkSelfPermission(activity!!,permission)!=PackageManager.PERMISSION_GRANTED){
+                requestPermissionList.add(permission)
+            }
+        }
+        if(!requestPermissionList.isEmpty()){
+            ActivityCompat.requestPermissions(activity!!,requestPermissionList.toTypedArray(),1)
+        }else{
+            listener.onGranted()
+        }
+    }
+
+    //隐藏软键盘
+    fun hideSoftKeyboard(){
+        val view=currentFocus
+        if(view!=null) {
+            val binder = view.windowToken
+            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(binder,InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+    }
+
+    //显示软键盘
+    fun showSoftKeyboard(editText:EditText?){
+        if(editText!=null) {
+            editText.requestFocus()
+            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.showSoftInput(editText, 0)
+        }
+    }
+
+    //当服务器返回加载内容失败时，显示该界面
+    protected fun showLoadErrorView(tip:String){
+        if(loadErrorView!=null){
+            loadErrorView?.visibility=View.VISIBLE
+            return
+        }
+        val viewStub=findViewById<ViewStub>(R.id.loadErrorView)
+        if(viewStub!=null){
+            loadErrorView=viewStub.inflate()
+            val loadErrorText=loadErrorView?.findViewById<TextView>(R.id.loadErrorText)
+            loadErrorText?.text=tip
+        }
+    }
+
+    //当因为网络原因无法显示的时候，显示该界面
+    protected fun showBadNetworkView(listener:View.OnClickListener){
+        if(badNetworkView!=null){
+            badNetworkView?.visibility=View.VISIBLE
+            return
+        }
+        val stubView=findViewById<ViewStub>(R.id.badNetworkView)
+        if(stubView!=null) {
+            badNetworkView=stubView.inflate()
+            val badNetworkRootView=badNetworkView?.findViewById<View>(R.id.badNetworkRootView)
+            badNetworkRootView?.setOnClickListener(listener)
+        }
+    }
+
+    //当获取到的数据为空时，显示该界面
+    protected fun showNoContentView(tip:String){
+        if(noContentView!=null){
+            noContentView?.visibility=View.VISIBLE
+            return
+        }
+        val stubView=findViewById<ViewStub>(R.id.noContentView)
+        if(stubView!=null) {
+            noContentView=stubView.inflate()
+            val noContentText=noContentView?.findViewById<TextView>(R.id.noContentText)
+            noContentText?.text=tip
+        }
+    }
+
+    //将noContentView隐藏
+    protected fun hideNoContentView(){
+        noContentView?.visibility=View.GONE
+    }
+
+    //将loadErrorView隐藏
+    protected fun hideLoadErrorView(){
+        loadErrorView?.visibility=View.GONE
+    }
+
+    //将badNetworkView隐藏
+    protected fun hideBadNetworkView(){
+        badNetworkView?.visibility=View.GONE
+    }
+
+    fun showProgressDialog(title:String?,message:String){
+        if(progressDialog==null){
+            progressDialog=ProgressDialog(this).apply {
+                if(title!=null){
+                    setTitle(title)
+                }
+                setMessage(message)
+                setCancelable(false)
+            }
+        }
+        progressDialog?.show()
+    }
+
+    fun closeProgressDialog(){
+        progressDialog?.let {
+            if(it.isShowing){
+                it.dismiss()
+            }
+        }
+    }
+
+    companion object {
+
+        private const val TAG = "BaseActivity"
     }
 
 }
