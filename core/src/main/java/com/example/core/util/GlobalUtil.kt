@@ -1,7 +1,10 @@
 package com.example.core.util
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.widget.Toast
 import com.example.core.GifFun
+import com.example.core.extension.logWarn
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,5 +48,16 @@ object GlobalUtil {
         }catch (e:InterruptedException){
             e.printStackTrace()
         }
+    }
+
+    fun getApplicationMetaData(key:String):String?{
+        var applicationInfo:ApplicationInfo?=null
+        try {
+            applicationInfo=GifFun.getContext().packageManager.getApplicationInfo(appPackage, PackageManager.GET_META_DATA)
+        }catch (e:PackageManager.NameNotFoundException){
+            logWarn(TAG,e.message,e)
+        }
+        if(applicationInfo==null) return ""
+        return applicationInfo.metaData.getString(key)
     }
 }

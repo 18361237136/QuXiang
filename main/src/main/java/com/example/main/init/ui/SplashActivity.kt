@@ -29,7 +29,11 @@ abstract class SplashActivity :BaseActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTime=System.currentTimeMillis()
+        delayToForward()
+    }
 
+    override fun setupViews() {
+        startInitRequest()
     }
 
     //设置闪屏界面的最大延迟跳转，让用户不至于在闪屏界面等太久
@@ -63,6 +67,11 @@ abstract class SplashActivity :BaseActivity(){
                 }
             }
         }
+    }
+
+    //开始向服务器发送初始化请求
+    private fun startInitRequest(){
+
     }
 
     companion object {
