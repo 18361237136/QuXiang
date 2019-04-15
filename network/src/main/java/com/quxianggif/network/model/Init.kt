@@ -2,6 +2,7 @@ package com.quxianggif.network.model
 
 import com.example.core.model.Version
 import com.google.gson.annotations.SerializedName
+import com.quxianggif.network.request.InitRequest
 
 /**
  * Anthor: Zhuangmingzhu
@@ -38,7 +39,7 @@ class Init :Response(){
 
     companion object {
         fun getResponse(callback: Callback){
-
+            InitRequest().listen(callback)
         }
     }
 }

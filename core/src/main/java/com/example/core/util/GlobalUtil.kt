@@ -50,6 +50,11 @@ object GlobalUtil {
         }
     }
 
+    //获取资源文件中定义的字符串。
+    fun getString(resId:Int):String{
+        return GifFun.getContext().resources.getString(resId)
+    }
+
     fun getApplicationMetaData(key:String):String?{
         var applicationInfo:ApplicationInfo?=null
         try {
@@ -59,5 +64,9 @@ object GlobalUtil {
         }
         if(applicationInfo==null) return ""
         return applicationInfo.metaData.getString(key)
+    }
+
+    fun getResponseClue(status:Int,msg:String):String{
+        return "code: $status , msg: $msg"
     }
 }

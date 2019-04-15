@@ -1,13 +1,22 @@
 package com.example.main.init.ui
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
+import com.example.core.Const
 import com.example.core.GifFun
+import com.example.core.extension.logWarn
 import com.example.core.model.Version
 import com.example.core.util.GlobalUtil
+import com.example.core.util.ShareUtil
 import com.example.main.feeds.ui.MainActivity
 import com.example.main.login.ui.LoginActivity
 import com.example.main.ui.BaseActivity
+import com.example.main.util.ResponseHandler
+import com.quxianggif.network.model.Init
+import com.quxianggif.network.model.OriginThreadCallback
+import com.quxianggif.network.model.Response
+import java.lang.Exception
 
 /**
  * Anthor: Zhuangmingzhu
@@ -71,7 +80,47 @@ abstract class SplashActivity :BaseActivity(){
 
     //开始向服务器发送初始化请求
     private fun startInitRequest(){
+        Init.getResponse(object :OriginThreadCallback{
+            override fun onResponse(response: Response) {
+                if(activity==null){
+                    return
+                }
+                var version:Version?=null
+                val init=response as Init
+                GifFun.BASE_URL=init.base
+                if(!ResponseHandler.handleResponse(init)){
+                    val status=init.status
+                    if(status==0){
+                        val token=init.token
+                        val avatar=init.avatar
+                        val bgImage=init.bgImage
+                        hasNewVersion=init.hasNewVersion
+                        if(hasNewVersion){
+                            version=init.version
+                        }
+                        if(!TextUtils.isEmpty(token)){
+                            ShareUtil.save(Const.Auth.TOKEN, token)
+                            if (!TextUtils.isEmpty(avatar)) {
+                                ShareUtil.save(Const.User.AVATAR, avatar)
+                            }
+                            if (!TextUtils.isEmpty(bgImage)) {
+                                ShareUtil.save(Const.User.BG_IMAGE, bgImage)
+                            }
+                            GifFun.refreshLoginState()
+                        }
+                    }else{
+                        logWarn(TAG, GlobalUtil.getResponseClue(status, init.msg))
+                    }
+                }
+                forwardToNextActivity(hasNewVersion,version)
+            }
 
+            override fun onFailure(e: Exception) {
+                logWarn(TAG,e.message,e)
+                forwardToNextActivity(false,null)
+            }
+
+        })
     }
 
     companion object {
