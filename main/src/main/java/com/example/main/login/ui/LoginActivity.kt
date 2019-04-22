@@ -3,8 +3,13 @@ package com.example.main.login.ui
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
+import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat.startActivity
 import android.view.View
+import android.widget.Toast
 import com.example.core.GifFun
+import com.example.core.extension.logError
 import com.example.core.model.Version
 import com.example.core.util.AndroidVersion
 import com.example.main.R
@@ -39,16 +44,17 @@ abstract class LoginActivity :AuthActivity() {
         }
 
         //启动LoginActivity并附带Transition动画
-        fun actionStartWithTransition(activity: Activity,logo: View,hasNewVersion:Boolean,version:Version?){
-            val intent=Intent(ACTION_LOGIN_WITH_TRANSITION).apply {
-                putExtra(INTENT_HAS_NEW_VERSION,hasNewVersion)
-                putExtra(INTENT_VERSION,version)
+        fun actionStartWithTransition(activity: Activity, logo: View, hasNewVersion:Boolean, version:Version?){
+            val intent = Intent(ACTION_LOGIN_WITH_TRANSITION).apply {
+                putExtra(INTENT_HAS_NEW_VERSION, hasNewVersion)
+                putExtra(INTENT_VERSION, version)
             }
-            if(AndroidVersion.hasLollipop()){
-                intent.putExtra(START_WITH_TRANSITION,true)
-                val options=ActivityOptions.makeSceneTransitionAnimation(activity,logo,activity.getString(R.string.transition_logo_splash))
-                activity.startActivity(intent,options.toBundle())
-            }else{
+            if (AndroidVersion.hasLollipop()) {
+                intent.putExtra(START_WITH_TRANSITION, true)
+                val options = ActivityOptions.makeSceneTransitionAnimation(activity, logo,
+                        activity.getString(R.string.transition_logo_splash))
+                activity.startActivity(intent, options.toBundle())
+            } else {
                 activity.startActivity(intent)
                 activity.finish()
             }

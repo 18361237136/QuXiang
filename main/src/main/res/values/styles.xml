@@ -2,7 +2,11 @@
 <resources>
 
     <style name="GifFun" parent="Theme.AppCompat.Light.NoActionBar">
-
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="colorControlHighlight">@color/ripple_light_grey</item>
     </style>
 
     <style name="MainActivityTabText" parent="TextAppearance.Design.Tab">
@@ -11,6 +15,16 @@
     </style>
 
     <style name="GifFun.SplashActivity">
-
+        <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
+
+    <style name="GifFun.RegisterActivity">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:textColorHint">@color/white_text</item>
+        <item name="colorControlNormal">@color/white_text</item>
+        <item name="colorControlHighlight">@color/white_text</item>
+    </style>
+
+    <style name="GifFun.LoginActivity" parent="GifFun.RegisterActivity"/>
 </resources>

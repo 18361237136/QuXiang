@@ -21,10 +21,15 @@ import android.widget.TextView
 import com.example.core.util.AndroidVersion
 import com.example.main.R
 import com.example.main.common.callback.PermissionListener
+import com.example.main.event.ForceToLoginEvent
+import com.example.main.event.MessageEvent
+import com.example.main.login.ui.LoginActivity
 import com.example.main.util.ActivityCollector
 import com.umeng.analytics.MobclickAgent
 import kotlinx.android.synthetic.main.activity_main.view.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.lang.ref.WeakReference
 
 /**
@@ -224,6 +229,16 @@ open class BaseActivity :AppCompatActivity() {
         progressDialog?.let {
             if(it.isShowing){
                 it.dismiss()
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    open fun onMessageEvent(messageEvent:MessageEvent){
+        if(messageEvent is ForceToLoginEvent){
+            if(isActive){//判断Activity是否在前台，防止非前台的Activity也处理这个事件，造成打开多个LoginActivity的问题。
+                ActivityCollector.finishAll()
+                LoginActivity.actionStart(this,false,null)
             }
         }
     }
