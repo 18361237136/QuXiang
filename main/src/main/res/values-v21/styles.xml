@@ -13,4 +13,8 @@
         <item name="android:windowEnterTransition">@null</item>
     </style>
 
+    <style name="GifFun.MainActivity">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
 </resources>

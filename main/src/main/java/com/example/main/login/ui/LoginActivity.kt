@@ -13,6 +13,11 @@ import com.example.core.extension.logError
 import com.example.core.model.Version
 import com.example.core.util.AndroidVersion
 import com.example.main.R
+import com.example.main.event.FinishActivityEvent
+import com.example.main.event.MessageEvent
+import com.example.main.feeds.ui.MainActivity
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Anthor: Zhuangmingzhu
@@ -64,5 +69,22 @@ abstract class LoginActivity :AuthActivity() {
     //是否进行动画
     protected var isTransitioning=false
 
+    override fun onBackPressed() {
+        if(isTransitioning){
+            finish()
+        }
+    }
+
+    override fun forwardToMainActivity() {
+        MainActivity.actionStart(this)
+        finish()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    override fun onMessageEvent(messageEvent: MessageEvent) {
+        if (messageEvent is FinishActivityEvent && LoginActivity::class.java == messageEvent.activityClass) {
+            finish()
+        }
+    }
 
 }

@@ -172,14 +172,24 @@ class OpenSourceLoginActivity :LoginActivity(){
                         }
                         10101->{
                             hideSoftKeyboard()
-
+                            OpenSourceRegisterActivity.registerByPhone(this@OpenSourceLoginActivity,number,code)
+                            loginInProgress(false)
+                        }
+                        else->{
+                            logWarn(TAG, "Login failed. " + GlobalUtil.getResponseClue(status, msg))
+                            showToast(response.msg)
+                            loginInProgress(false)
                         }
                     }
+                }else{
+                    loginInProgress(false)
                 }
             }
 
             override fun onFailure(e: Exception) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                logWarn(TAG, e.message, e)
+                ResponseHandler.handleFailure(e)
+                loginInProgress(false)
             }
 
         })
@@ -198,10 +208,6 @@ class OpenSourceLoginActivity :LoginActivity(){
             loginProgressBar.visibility = View.INVISIBLE
             loginInputElements.visibility = View.VISIBLE
         }
-    }
-
-    override fun forwardToMainActivity() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     inner class SMSTimer(millisInFuture:Long,countDownInterval:Long):CountDownTimer(millisInFuture,countDownInterval){

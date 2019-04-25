@@ -28,8 +28,12 @@
 
     <style name="GifFun.LoginActivity" parent="GifFun.RegisterActivity"/>
 
+    <!--登录时输入框的报错信息-->
     <style name="EditTextErrorAppearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/white_text</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <!--MainActivity-->
+    <style name="GifFun.MainActivity"/>
 </resources>
