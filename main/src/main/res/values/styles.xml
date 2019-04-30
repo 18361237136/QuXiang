@@ -36,4 +36,9 @@
 
     <!--MainActivity-->
     <style name="GifFun.MainActivity"/>
+
+    <style name="GifFun.MaterialButton">
+        <item name="colorControlHighlight">@color/ripple_light</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+    </style>
 </resources>
