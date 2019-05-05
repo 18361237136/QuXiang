@@ -11,4 +11,13 @@ import com.example.main.feeds.ui.WorldFeedsFragment
  */
 class WorldFeedAdapter(private val fragment:WorldFeedsFragment, feedList:List<WorldFeed>, imageWidth:Int,
                        layoutManager: RecyclerView.LayoutManager, override var isNoMoreData: Boolean, override var isLoadFailed: Boolean):WaterFallFeedAdapter<WorldFeed>(fragment.activity, feedList, imageWidth, layoutManager) {
+
+    override fun getItemCount(): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }
