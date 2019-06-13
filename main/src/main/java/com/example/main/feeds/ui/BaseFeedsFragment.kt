@@ -1,5 +1,6 @@
 package com.example.main.feeds.ui
 
+import android.os.Bundle
 import android.support.v4.widget.CursorAdapter
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
@@ -48,8 +49,13 @@ abstract class BaseFeedsFragment :BaseFragment() {
     var isNoMoreData=false
         internal set
 
-    internal fun initViews(rootView: View){
-        recyclerView=rootView.findViewById(R.id.recyclerView)
+    internal fun initViews(rootView: View) {
+        recyclerView = rootView.findViewById(R.id.recyclerView)
+        swipeRefresh = rootView.findViewById(R.id.swipeRefresh)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         loadDataListener=this as LoadDataListener
         activity=getActivity() as MainActivity
         setupRecyclerView()

@@ -69,4 +69,27 @@ object GlobalUtil {
     fun getResponseClue(status:Int,msg:String):String{
         return "code: $status , msg: $msg"
     }
+
+    // 获取转换之后的数字显示，如123456会被转换成12.3万。
+    fun getConvertedNumber(number:Int)=when{
+        number<10000->number.toString()
+        number<10000->{
+            var converted=String.format(Locale.ENGLISH,"%.1f",number/10000.0)
+            if(converted.endsWith(".0")){
+                converted=converted.replace(".0","")
+            }
+            converted+"万"
+        }
+        number<100100100->{
+            val converted = number / 10000
+            converted.toString() + "万"
+        }
+        else->{
+            var converted = String.format(Locale.ENGLISH, "%.1f", number / 100_000_000.0)
+            if (converted.endsWith(".00")) {
+                converted = converted.replace(".00", "")
+            }
+            converted + "亿"
+        }
+    }
 }

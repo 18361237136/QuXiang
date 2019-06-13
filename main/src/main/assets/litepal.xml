@@ -32,10 +32,10 @@
     	</list>
     -->
     <list>
-        <mapping class="com.quxianggif.core.model.WorldFeed" />
-        <mapping class="com.quxianggif.core.model.FollowingFeed" />
-        <mapping class="com.quxianggif.core.model.RefFeed" />
-        <mapping class="com.quxianggif.feeds.model.Draft" />
+        <mapping class="com.example.core.model.WorldFeed" />
+        <!--<mapping class="com.quxianggif.core.model.FollowingFeed" />-->
+        <!--<mapping class="com.quxianggif.core.model.RefFeed" />-->
+        <!--<mapping class="com.quxianggif.feeds.model.Draft" />-->
     </list>
 
     <!--

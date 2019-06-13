@@ -8,4 +8,7 @@
 
 
     <string name="transition_logo_splash" translatable="false">transition_logo_splash</string>
+    <string name="transition_feed_detail" translatable="false">transition_feed_detail</string>
+    <string name="transition_feed_detail_bg" translatable="false">transition_feed_detail_bg</string>
+    <string name="transition_feed_detail_image_bg" translatable="false">transition_feed_detail_image_bg</string>
 </resources>

@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-libraryjars libs/litepal-1.5.1.jar
+-dontwarn org.litepal.**
+-keep class org.litepal.** {*; }
