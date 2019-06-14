@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.example.core.extension.dp2px
-import com.example.main.feeds.adapter.WaterFallFeedAdapter
+import com.example.main.common.adapter.WaterFallFeedAdapter
 
 /**
  * Anthor: Zhuangmingzhu

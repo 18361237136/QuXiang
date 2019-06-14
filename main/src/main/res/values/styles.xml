@@ -41,4 +41,11 @@
         <item name="colorControlHighlight">@color/ripple_light</item>
         <item name="colorButtonNormal">@color/colorAccent</item>
     </style>
+
+    <style name="GifFunAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@color/white</item>
+    </style>
 </resources>

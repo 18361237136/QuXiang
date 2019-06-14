@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.core.model.WorldFeed
 import com.example.main.R
+import com.example.main.common.adapter.WaterFallFeedAdapter
 import com.example.main.feeds.ui.WorldFeedsFragment
 
 /**
@@ -14,7 +15,7 @@ import com.example.main.feeds.ui.WorldFeedsFragment
  * Describe:世界模块的RecyclerView适配器，用于在界面上展示世界模块的数据以及处理世界模块的相关功能
  */
 class WorldFeedAdapter(private val fragment: WorldFeedsFragment, feedList:List<WorldFeed>, imageWidth:Int,
-                       layoutManager: RecyclerView.LayoutManager):WaterFallFeedAdapter<WorldFeed>(fragment.activity, feedList, imageWidth, layoutManager) {
+                       layoutManager: RecyclerView.LayoutManager): WaterFallFeedAdapter<WorldFeed>(fragment.activity, feedList, imageWidth, layoutManager) {
 
     override var isLoadFailed: Boolean = false
         get() = fragment.isLoadFailed
@@ -38,6 +39,6 @@ class WorldFeedAdapter(private val fragment: WorldFeedsFragment, feedList:List<W
         baseBindFeedHolder(viewHolder, position)
     }
 
-    private class WorldFeedViewHolder internal constructor(view: View):WaterFallFeedAdapter.FeedViewHolder(view)
+    private class WorldFeedViewHolder internal constructor(view: View): WaterFallFeedAdapter.FeedViewHolder(view)
 
 }

@@ -186,7 +186,7 @@ class MainActivity :BaseActivity(), NavigationView.OnNavigationItemSelectedListe
     private fun setupViewPager(viewPager: ViewPager){
         pagerAdapter= Adapter(supportFragmentManager)
         pagerAdapter.addFragment(WorldFeedsFragment(),"世界")
-        pagerAdapter.addFragment(WorldFeedsFragment(),"关注")
+        pagerAdapter.addFragment(FollowingFeedsFragment(),"关注")
         pagerAdapter.addFragment(HotFeedsFragment(),"热门")
         viewPager.adapter=pagerAdapter
         viewPager.offscreenPageLimit=2

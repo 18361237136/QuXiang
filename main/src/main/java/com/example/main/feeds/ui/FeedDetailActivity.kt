@@ -31,7 +31,7 @@ class FeedDetailActivity : BaseActivity(){
 
         private const val GIF_LOAD_FAILED = 3
 
-        fun actionSatrt(activity: Activity, image: View,feed:BaseFeed){
+        fun actionStart(activity: Activity, image: View,feed:BaseFeed){
             val intent=Intent(activity,FeedDetailActivity::class.java)
             intent.putExtra(FEED,feed)
 

@@ -10,6 +10,7 @@ import com.example.core.model.HotFeed
 import com.example.core.util.GlobalUtil
 import com.example.main.R
 import com.example.main.comments.ui.CommentsActivity
+import com.example.main.common.adapter.WaterFallFeedAdapter
 import com.example.main.feeds.ui.HotFeedsFragment
 
 /**
@@ -18,7 +19,7 @@ import com.example.main.feeds.ui.HotFeedsFragment
  * Describe:热门Feed模块的RecyclerView适配器，用于在界面上展示热门Feed数据。
  */
 class HotFeedAdapter(private val fragment:HotFeedsFragment,private val feedList:List<HotFeed>,imageWidth:Int,
-                     layoutManager: RecyclerView.LayoutManager):WaterFallFeedAdapter<HotFeed>(fragment.activity,feedList,imageWidth,layoutManager) {
+                     layoutManager: RecyclerView.LayoutManager): WaterFallFeedAdapter<HotFeed>(fragment.activity,feedList,imageWidth,layoutManager) {
     override var isLoadFailed: Boolean=false
         get() = fragment.isLoadFailed
 
