@@ -1,5 +1,6 @@
 package com.example.main.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
@@ -21,6 +22,7 @@ import android.widget.TextView
 import com.example.core.util.AndroidVersion
 import com.example.main.R
 import com.example.main.common.callback.PermissionListener
+import com.example.main.common.callback.RequestLifecycle
 import com.example.main.event.ForceToLoginEvent
 import com.example.main.event.MessageEvent
 import com.example.main.login.ui.LoginActivity
@@ -37,7 +39,8 @@ import java.lang.ref.WeakReference
  * Date: 2019/4/8 上午11:24
  * Describe:Activity的基类
  */
-open class BaseActivity :AppCompatActivity() {
+@SuppressLint("Registered")
+open class BaseActivity :AppCompatActivity(),RequestLifecycle {
 
     //判断当前Activity是否在前台
     protected var isActive: Boolean = false
@@ -241,6 +244,24 @@ open class BaseActivity :AppCompatActivity() {
                 LoginActivity.actionStart(this,false,null)
             }
         }
+    }
+
+    @CallSuper
+    override fun startLoading() {
+        loading?.visibility = View.VISIBLE
+        hideBadNetworkView()
+        hideNoContentView()
+        hideLoadErrorView()
+    }
+
+    @CallSuper
+    override fun loadFinished() {
+        loading?.visibility = View.GONE
+    }
+
+    @CallSuper
+    override fun loadFailed(msg: String?) {
+        loading?.visibility = View.GONE
     }
 
     companion object {
