@@ -1,0 +1,95 @@
+package com.example.core.util
+
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.widget.Toast
+import com.example.core.GifFun
+import com.example.core.extension.logWarn
+import java.text.SimpleDateFormat
+import java.util.*
+
+/**
+ * Anthor: Zhuangmingzhu
+ * Date: 2019/4/11 下午4:31
+ * Describe:应用程序全局的通用工具类，功能比较单一，经常被复用的功能，应该封装到此工具类中，从而给全局代码提供方面的操作
+ */
+object GlobalUtil {
+    private val TAG = "GlobalUtil"
+
+    private var toast: Toast? = null
+
+    //获取当前应用程序的包名
+    val appPackage: String
+        get() = GifFun.getContext().packageName
+
+    //获取当前应用程序的名称
+    val appName: String
+        get() = GifFun.getContext().resources.getString(GifFun.getContext().applicationInfo.labelRes)
+
+    //获取当前应用程序的版本名
+    val appVersionName: String
+        get() = GifFun.getContext().packageManager.getPackageInfo(appPackage, 0).versionName
+
+    //获取当前应用程序的版本号
+    val appVersionCode: Int
+        get() = GifFun.getContext().packageManager.getPackageInfo(appPackage, 0).versionCode
+
+    //获取当前时间的字符串，格式为yyyyMMddHHmmss
+    val currentDateString: String
+        get() {
+            val sdf=SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
+            return sdf.format(Date())
+        }
+
+    //将当前线程睡眠指定毫秒数
+    fun sleep(millis:Long){
+        try {
+            Thread.sleep(millis)
+        }catch (e:InterruptedException){
+            e.printStackTrace()
+        }
+    }
+
+    //获取资源文件中定义的字符串。
+    fun getString(resId:Int):String{
+        return GifFun.getContext().resources.getString(resId)
+    }
+
+    fun getApplicationMetaData(key:String):String?{
+        var applicationInfo:ApplicationInfo?=null
+        try {
+            applicationInfo=GifFun.getContext().packageManager.getApplicationInfo(appPackage, PackageManager.GET_META_DATA)
+        }catch (e:PackageManager.NameNotFoundException){
+            logWarn(TAG,e.message,e)
+        }
+        if(applicationInfo==null) return ""
+        return applicationInfo.metaData.getString(key)
+    }
+
+    fun getResponseClue(status:Int,msg:String):String{
+        return "code: $status , msg: $msg"
+    }
+
+    // 获取转换之后的数字显示，如123456会被转换成12.3万。
+    fun getConvertedNumber(number:Int)=when{
+        number<10000->number.toString()
+        number<10000->{
+            var converted=String.format(Locale.ENGLISH,"%.1f",number/10000.0)
+            if(converted.endsWith(".0")){
+                converted=converted.replace(".0","")
+            }
+            converted+"万"
+        }
+        number<100100100->{
+            val converted = number / 10000
+            converted.toString() + "万"
+        }
+        else->{
+            var converted = String.format(Locale.ENGLISH, "%.1f", number / 100_000_000.0)
+            if (converted.endsWith(".00")) {
+                converted = converted.replace(".00", "")
+            }
+            converted + "亿"
+        }
+    }
+}

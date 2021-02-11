@@ -1,2 +1,44 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.main" />
+    package="com.example.main" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <application>
+
+        <activity
+            android:name=".feeds.ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GifFun.MainActivity"/>
+
+        <activity android:name=".user.ui.UserHomePageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GifFun.UserHomePageActivity"/>
+
+        <activity android:name=".user.ui.ModifyUserInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GifFun"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".comments.ui.CommentsActivity"
+            android:label="@string/all_comments"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".user.ui.FollowshipActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".user.ui.BrowserPhotoActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".report.ReportActivity"
+            android:screenOrientation="portrait"/>
+
+    </application>
+</manifest>

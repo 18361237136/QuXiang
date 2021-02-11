@@ -3,16 +3,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion COMPILE_SDK_VERSION as int
 
 
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -26,15 +23,19 @@ android {
 
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'org.litepal.android:kotlin:2.1.0'
+    api 'com.google.code.gson:gson:2.8.5'
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
+
 }
 repositories {
     mavenCentral()
